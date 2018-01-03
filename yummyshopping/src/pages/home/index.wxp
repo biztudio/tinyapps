@@ -10,7 +10,7 @@
     </view>
 
     <view class="index-ft">
-      <view class="provider">Created by 沈小扬</view>
+      <view class="provider">...</view>
     </view>
   </view>
 
@@ -18,6 +18,9 @@
 
 <script>
 export default {
+  data:{
+
+  }
 }
 </script>
 

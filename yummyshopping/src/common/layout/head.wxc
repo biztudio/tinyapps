@@ -1,19 +1,23 @@
 <template>
   <view class="head">
-    <image class="head-icon" src="https://biztudio.github.io/images/4ta/Icecream.png "></image>
     <text class="head-text">{{head_title}}</text>
   </view>
 </template>
 
 <script>
-export default {
-  /*
-  data(){
-    return{
-      head_title:'本次清单'
-    };
+//import * as _ from 'lodash'
+
+let extendMethods = {
+  test:function(){
+    let t = [1,2,3,4,5]
+    //let resutl = []
+    // _.each(t, function(fv) { resutl.push(fv) })
+     return t[4]
   }
-  */
+} 
+
+export default {
+
   data:{
     head_title:'本次清单'
   }
@@ -23,10 +27,10 @@ export default {
 <style>
 .head {
   height: 80rpx;
-  background-color:#ffffff;/*#b8e1f6;*/
+  background-color:#b8e1f6;
   display: flex;
-  align-items: padding-left;
-  justify-content: padding-left;
+  align-items: left;
+  justify-content: left;
 }
 .head-icon {
   width: 60rpx;
