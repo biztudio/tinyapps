@@ -1,22 +1,32 @@
 <template>
   <view class="head">
-    <image class="head-icon" src="https://s10.mogucdn.com/mlcdn/c45406/171122_3a9505cl22fk767gg7j6cfe3878f8_176x176.png"></image>
-    <text class="head-text">头部模板</text>
+    <image class="head-icon" src="https://biztudio.github.io/images/4ta/Icecream.png "></image>
+    <text class="head-text">{{head_title}}</text>
   </view>
 </template>
 
 <script>
 export default {
+  /*
+  data(){
+    return{
+      head_title:'本次清单'
+    };
+  }
+  */
+  data:{
+    head_title:'本次清单'
+  }
 }
 </script>
 
 <style>
 .head {
   height: 80rpx;
-  background-color:#b8e1f6;
+  background-color:#ffffff;/*#b8e1f6;*/
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: padding-left;
+  justify-content: padding-left;
 }
 .head-icon {
   width: 60rpx;
