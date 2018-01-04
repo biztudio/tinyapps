@@ -1,0 +1,16 @@
+<template>
+  <view>Setting Page</view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: '设置',
+    usingComponents: {}
+  },
+  data: {}
+}
+</script>
+
+<style>
+</style>

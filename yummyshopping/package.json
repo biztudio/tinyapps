@@ -3,9 +3,9 @@
   "description": "切实解决痛点的实用购物小清单",
   "version": "1.0.0",
   "author": "Yang SHEN",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "@minui/wxc-tab": "^1.0.3"
   },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",

@@ -19,7 +19,7 @@ let extendMethods = {
 export default {
 
   data:{
-    head_title:'本次清单'
+    head_title:'每次 Shopping 就是要 Yummy!'
   }
 }
 </script>
@@ -29,8 +29,8 @@ export default {
   height: 80rpx;
   background-color:#b8e1f6;
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
 }
 .head-icon {
   width: 60rpx;

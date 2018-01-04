@@ -1,59 +1,50 @@
 <template>
-  <view>
-    <view class="index-hd">
-      <image class="index-logo" src="https://s10.mogucdn.com/mlcdn/c45406/171122_5l92i48kb80j1fkha1fh1cd3h43i5_200x200.png"></image>
-      <view class="index-desc">MinUI-小程序</view>
-    </view>
+  <wxc-tab 
+    bind:tabchange='onClick'
+    default-index='{{4}}'
+    active-text-color='#108ee9'
+    active-line-color='#108ee9'
+    component-id='c1'
+    animate='{{true}}'>
+      <wxc-tab-panel
+        wx:for='{{tabs}}'
+        wx:for-item='tab'
+        wx:key='{{tab.content}}'
+        tab-index='{{index}}'
+        componentID='c1'
+        label='{{tab.title}}'>
 
-    <view class="index-bd">
-      Hello World
-    </view>
-
-    <view class="index-ft">
-      <view class="provider">...</view>
-    </view>
-  </view>
-
+         {{tab.content}}
+         
+      </wxc-tab-panel>
+  </wxc-tab>
 </template>
 
 <script>
 export default {
-  data:{
+  methods:{
+    onClick:function(event){
+      console.log('ComponentID:${event.detail.ComponentID}, you selected ${event.detail.key}')
+    }
+  },
 
+  config:{
+    usingComponents:{
+      'wxc-tab':'@minui/wxc-tab',
+      'wxc-tab-panel':'@minui/wxc-tab/panel'
+    }
+  },
+
+  data:{
+    tabs:[
+      {'title':'Option 1', 'content':'content 1'},
+      {'title':'Option 2', 'content':'content 2'},
+      {'title':'Option 3', 'content':'content 3'}
+    ]
   }
 }
 </script>
 
 <style>
-.index-hd {
-  padding: 70rpx;
-  text-align: center;
-}
-.index-bd {
-  padding: 20rpx 30rpx;
-  background-color:cadetblue;
-  color: #fff;
-  text-align: center;
-}
-.index-ft {
-  padding-bottom: 20rpx;
-  text-align: center;
-}
-.index-logo {
-  width: 100rpx;
-  height: 100rpx;
-}
-.index-desc {
-  margin-top: 20rpx;
-  color: #888888;
-  font-size: 28rpx;
-}
 
-.provider {
-  position: fixed;
-  width: 100%;
-  bottom: 120rpx;
-  color: #a9a9a9;
-  text-align: center;
-}
 </style>
