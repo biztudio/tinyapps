@@ -1,18 +1,18 @@
 <template>
   <wxc-tab 
-    bind:tabchange='onClick'
-    default-index='{{4}}'
-    active-text-color='#108ee9'
-    active-line-color='#108ee9'
-    component-id='c1'
-    animate='{{true}}'>
+    bind:tabchange="onClick"
+    default-index="{{4}}"
+    active-text-color="#108ee9"
+    active-line-color="#108ee9"
+    component-id="c1"
+    animate="{{true}}">
       <wxc-tab-panel
-        wx:for='{{tabs}}'
-        wx:for-item='tab'
-        wx:key='{{tab.content}}'
-        tab-index='{{index}}'
-        componentID='c1'
-        label='{{tab.title}}'>
+        wx:for="{{tabs}}"
+        wx:for-item="tab"
+        wx:key="{{tab.content}}"
+        tab-index="{{index}}"
+        component-id="c1"
+        label="{{tab.title}}">
 
          {{tab.content}}
          
@@ -21,25 +21,28 @@
 </template>
 
 <script>
+
 export default {
-  methods:{
+ 
+ methods:{
     onClick:function(event){
-      console.log('ComponentID:${event.detail.ComponentID}, you selected ${event.detail.key}')
+      //console.log('ComponentID:${event.detail.ComponentID}, you selected ${event.detail.key}')
+      console.log(100)
     }
   },
 
-  config:{
-    usingComponents:{
-      'wxc-tab':'@minui/wxc-tab',
-      'wxc-tab-panel':'@minui/wxc-tab/panel'
+ config: {
+    usingComponents: {
+      'wxc-tab': '@minui/wxc-tab',
+      'wxc-tab-panel': '@minui/wxc-tab/panel'
     }
   },
 
   data:{
     tabs:[
-      {'title':'Option 1', 'content':'content 1'},
-      {'title':'Option 2', 'content':'content 2'},
-      {'title':'Option 3', 'content':'content 3'}
+      {title:'Option 1', content:'content 1'},
+      {title:'Option 2', content:'content 2'},
+      {title:'Option 3', content:'content 3'}
     ]
   }
 }
