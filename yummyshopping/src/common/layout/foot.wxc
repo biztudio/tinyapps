@@ -8,7 +8,7 @@
 <script>
 export default {
   data:{
-    foot_title:'Made by 沈小扬, since 2017'
+    foot_title:'Made by Biztudio, since 2017'
   }
 }
 </script>

@@ -21,7 +21,7 @@
         backgroundTextStyle: 'dark',
         backgroundColor: '#efefef',
         navigationBarBackgroundColor: '#ffffff',
-        navigationBarTitleText: '雅米购物单',
+        navigationBarTitleText: '雅米消品单',
         navigationBarTextStyle: 'black'
       },
       networkTimeout: {
