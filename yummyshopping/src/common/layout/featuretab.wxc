@@ -14,8 +14,13 @@
         component-id="c1"
         label="{{tab.title}}">
 
-         {{tab.content}}
-         
+            <block wx:if="{{index > 0}}">
+                 {{tab.content}}
+            </block>
+            <block wx:elif="{{index == 0}}">
+                <shoppinglist ></shoppinglist>
+            </block>
+
       </wxc-tab-panel>
   </wxc-tab>
 </template>
@@ -26,20 +31,20 @@ export default {
  methods:{
     onClick:function(event){
       console.log('ComponentID: ' + event.detail.componentId + ', you selected ' + event.detail.key)
-
     }
   },
 
  config: {
     usingComponents: {
       'wxc-tab': '@minui/wxc-tab',
-      'wxc-tab-panel': '@minui/wxc-tab/panel'
+      'wxc-tab-panel': '@minui/wxc-tab/panel',
+      'shoppinglist': 'layout/shoppinglist'      
     }
   },
 
   data:{
     tabs:[
-      {title:'新建清单', content:'content 1'},
+      {title:'新建清单', content:'list'},
       {title:'过往清单', content:'content 2'},
       {title:'清单数据', content:'content 3'}
     ]
