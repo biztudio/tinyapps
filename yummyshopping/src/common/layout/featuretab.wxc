@@ -1,0 +1,52 @@
+<template>
+<wxc-tab 
+    bind:tabchange="onClick"
+    default-index="{{0}}"
+    active-text-color="#108ee9"
+    active-line-color="#108ee9"
+    component-id="c1"
+    animate="{{true}}">
+      <wxc-tab-panel
+        wx:for="{{tabs}}"
+        wx:for-item="tab"
+        wx:key="{{tab.content}}"
+        tab-index="{{index}}"
+        component-id="c1"
+        label="{{tab.title}}">
+
+         {{tab.content}}
+         
+      </wxc-tab-panel>
+  </wxc-tab>
+</template>
+<script>
+
+export default {
+ 
+ methods:{
+    onClick:function(event){
+      console.log('ComponentID: ' + event.detail.componentId + ', you selected ' + event.detail.key)
+
+    }
+  },
+
+ config: {
+    usingComponents: {
+      'wxc-tab': '@minui/wxc-tab',
+      'wxc-tab-panel': '@minui/wxc-tab/panel'
+    }
+  },
+
+  data:{
+    tabs:[
+      {title:'新建清单', content:'content 1'},
+      {title:'过往清单', content:'content 2'},
+      {title:'清单数据', content:'content 3'}
+    ]
+  }
+}
+</script>
+
+<style>
+
+</style>
