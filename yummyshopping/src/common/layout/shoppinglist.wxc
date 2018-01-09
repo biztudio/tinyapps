@@ -1,7 +1,20 @@
 <template>
+
 <view>
-      a shopping list here
-</view>      
+     已经添加条目
+      <checkbox-group bindchange="checkboxChange">
+        <label class="checkbox" wx:for="{{checkitems}}"  wx:for-item="checkitem"  wx:key="{{checkitem.name}}">
+            <checkbox value="{{checkitem.name}}" checked="{{checkitem.checked}}"/>{{checkitem.value}}
+        </label>
+      </checkbox-group>
+</view>    
+
+<view class="section">
+  <input placeholder="输入一条购物项" maxlength="20"  component-id="newitem" bindinput="bindKeyInput" auto-focus/>
+  <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}" lang="zh_CN"
+        disabled="{{disabled}}" bindtap="addnewitem" hover-class="other-button-hover"> 添加 </button>
+</view>
+
 </template>
 <script>
 export default{
@@ -12,7 +25,63 @@ export default{
     },
 
     data: {
+        //button setting
+        defaultSize: 'default',
+        primarySize: 'default',
+        warnSize: 'default',
+        disabled: false,
+        plain: false,
+        loading: false,
 
+        newitemValue:'TSET',
+
+        checkitems: [
+        /*
+            {name: 'USA', value: '美国'},
+            {name: 'CHN', value: '中国'},
+            {name: 'BRA', value: '巴西'},
+            {name: 'JPN', value: '日本'},
+            {name: 'ENG', value: '英国'},
+            {name: 'FRA', value: '法国'},
+        */    
+        ]
+    },
+
+    methods:{
+        checkboxChange: function(e) {
+            //console.log('checkbox changed，new value：', e.detail.value)
+        },
+
+        bindKeyInput:function(e){
+            //console.log('inputbox changed，new value：', e.detail.value)
+            this.setData({
+                newitemValue: e.detail.value
+            })
+        },
+
+        addnewitem:function(e){
+            console.log(this.data.newitemValue)
+            let newitem = this.data.newitemValue
+            if(!newitem){
+                console.log('Nothing')
+            }
+            else{
+                let index = this.data.checkitems.lengh + 1
+                this.data.checkitems.push({name:'si'+ index, value:newitem})
+                console.log(this.data.checkitems)
+                this.setData({newitemValue:''})
+            }
+        }
     }
 }
 </script>
+
+<style>
+.button-hover {
+  background-color: red;
+}
+/** 添加自定义button点击态样式类**/
+.other-button-hover {
+  background-color: blue;
+}
+</style>
