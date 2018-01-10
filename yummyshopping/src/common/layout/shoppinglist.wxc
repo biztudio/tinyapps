@@ -14,6 +14,8 @@
   <input placeholder="输入一条计划购物项" maxlength="20"  component-id="newitem" value="{{newitemValue}}" bindinput='bindInput' auto-focus/>
   <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" lang="zh_CN"
         disabled="{{disabled}}" bindtap="addnewitem" hover-class="other-button-hover"> 点击添加 </button>
+  <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="removeitem"> 删除选定项目 </button>      
 </view>
 
 <wxc-toast
@@ -46,13 +48,15 @@ export default{
 
         newitemValue:'',
 
-        checkitems: []
+        checkitems: [],
+        checkeditems:[]
     },
 
     methods:{
        
         checkboxChange: function(e) {
             //console.log('checkbox changed，new value：', e.detail.value)
+            this.data.checkeditems = e.detail.value            
         },
 
         bindInput:function(e){
@@ -84,6 +88,16 @@ export default{
                 newitems.push({name:'si'+ index, value:newitem})
                 this.setData({checkitems:newitems})
                 this.setData({newitemValue:''})
+            }
+        },
+
+        removeitem:function(e){
+            console.log('checked items: ' + this.data.checkeditems)
+            if(this.data.checkeditems){
+                let newitems = this.data.checkitems.filter(ci => !(this.data.checkeditems.includes(ci.name)));
+                this.setData({checkitems:newitems})
+                this.data.checkeditems = []
+                //console.log(this.data.checkitems)
             }
         }
     }
