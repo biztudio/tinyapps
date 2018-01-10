@@ -5,7 +5,8 @@
   "author": "Yang SHEN",
   "license": "GPL-3.0",
   "dependencies": {
-    "@minui/wxc-tab": "^1.0.5"
+    "@minui/wxc-tab": "^1.0.5",
+    "@minui/wxc-toast": "^1.0.6"
   },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",

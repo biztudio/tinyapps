@@ -19,7 +19,7 @@ let extendMethods = {
 export default {
 
   data:{
-    head_title:'每次 Shopping 就是要 Yummy!'
+    head_title:'明明白白地消费!'
   }
 }
 </script>

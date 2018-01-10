@@ -2,7 +2,7 @@
 
 <view>
      已经添加条目
-      <checkbox-group bindchange="checkboxChange">
+     <checkbox-group bindchange="checkboxChange">
         <label class="checkbox" wx:for="{{checkitems}}"  wx:for-item="checkitem"  wx:key="{{checkitem.name}}">
             <checkbox value="{{checkitem.name}}" checked="{{checkitem.checked}}"/>{{checkitem.value}}
         </label>
@@ -10,17 +10,23 @@
 </view>    
 
 <view class="section">
-  <input placeholder="输入一条购物项" maxlength="20"  component-id="newitem" bindinput="bindKeyInput" auto-focus/>
-  <button type="default" size="{{defaultSize}}" loading="{{loading}}" plain="{{plain}}" lang="zh_CN"
-        disabled="{{disabled}}" bindtap="addnewitem" hover-class="other-button-hover"> 添加 </button>
+  <input placeholder="输入一条购物项" maxlength="20"  component-id="newitem" value="{{newitemValue}}" bindinput='bindInput' auto-focus/>
+  <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" lang="zh_CN"
+        disabled="{{disabled}}" bindtap="addnewitem" hover-class="other-button-hover"> 点击添加 </button>
 </view>
 
+<wxc-toast
+    is-show="{{$toast.show}}"
+    text="请多少填些内容，谢谢"
+    icon="no"
+    icon-color="#ff5777"
+    ></wxc-toast>
 </template>
 <script>
 export default{
     config: {
         usingComponents: {
-        
+            'wxc-toast':'@minui/wxc-toast'
         }
     },
 
@@ -33,42 +39,49 @@ export default{
         plain: false,
         loading: false,
 
-        newitemValue:'TSET',
+        $toast: {
+            show: false
+        },
 
-        checkitems: [
-        /*
-            {name: 'USA', value: '美国'},
-            {name: 'CHN', value: '中国'},
-            {name: 'BRA', value: '巴西'},
-            {name: 'JPN', value: '日本'},
-            {name: 'ENG', value: '英国'},
-            {name: 'FRA', value: '法国'},
-        */    
-        ]
+        newitemValue:'',
+
+        checkitems: []
     },
 
     methods:{
+       
         checkboxChange: function(e) {
             //console.log('checkbox changed，new value：', e.detail.value)
         },
 
-        bindKeyInput:function(e){
-            //console.log('inputbox changed，new value：', e.detail.value)
-            this.setData({
-                newitemValue: e.detail.value
-            })
+        bindInput:function(e){
+           this.data.newitemValue = e.detail.value
         },
 
         addnewitem:function(e){
-            console.log(this.data.newitemValue)
             let newitem = this.data.newitemValue
             if(!newitem){
-                console.log('Nothing')
+                //console.log('Nothing')
+                this.setData({
+                    $toast: {
+                            show: true
+                        }
+                    })
+
+                setTimeout(() => {
+                    this.setData({
+                    $toast: {
+                        show: false
+                    }
+                    })
+                }, 1500)
+
             }
             else{
-                let index = this.data.checkitems.lengh + 1
-                this.data.checkitems.push({name:'si'+ index, value:newitem})
-                console.log(this.data.checkitems)
+                let index = this.data.checkitems?(this.data.checkitems.length + 1):1
+                let newitems =  this.data.checkitems?this.data.checkitems:[]
+                newitems.push({name:'si'+ index, value:newitem})
+                this.setData({checkitems:newitems})
                 this.setData({newitemValue:''})
             }
         }

@@ -9,8 +9,8 @@
     "splitLineColor": "#ECECEC",
     "backgroundColour": "#EFEFEF"
   },
-  "prefix": "wxc",
   "dest": "dist",
+  "prefix": "wxc",
   "npm": {
     "dest": "dist/packages"
   },
