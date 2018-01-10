@@ -3,14 +3,15 @@
 <view>
      已经添加条目
      <checkbox-group bindchange="checkboxChange">
-        <label class="checkbox" wx:for="{{checkitems}}"  wx:for-item="checkitem"  wx:key="{{checkitem.name}}">
-            <checkbox value="{{checkitem.name}}" checked="{{checkitem.checked}}"/>{{checkitem.value}}
+        <!-- http://blog.csdn.net/wangshop_11/article/details/54236745 -->
+        <label class="checkbox" style="display:flex;" wx:for="{{checkitems}}"  wx:for-item="checkitem"  wx:key="{{checkitem.name}}">
+            <checkbox value="{{checkitem.name}}" checked="{{checkitem.checked}}">{{checkitem.value}}</checkbox>
         </label>
       </checkbox-group>
 </view>    
 
 <view class="section">
-  <input placeholder="输入一条购物项" maxlength="20"  component-id="newitem" value="{{newitemValue}}" bindinput='bindInput' auto-focus/>
+  <input placeholder="输入一条计划购物项" maxlength="20"  component-id="newitem" value="{{newitemValue}}" bindinput='bindInput' auto-focus/>
   <button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" lang="zh_CN"
         disabled="{{disabled}}" bindtap="addnewitem" hover-class="other-button-hover"> 点击添加 </button>
 </view>
