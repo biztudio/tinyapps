@@ -1,0 +1,129 @@
+<template>
+<view>
+ <view class="section">
+        <text>序列模式：</text>
+        <radio-group class="radio-group" bindchange="radioChange">
+          <label class="radio" style="display:flex;" wx:for="{{charts}}"  wx:for-item="checkitem"  wx:key="{{checkitem.id}}">
+            <radio value="{{checkitem.id}}" checked="{{checkitem.checked}}"/>{{checkitem.title}}
+          </label>
+        </radio-group>
+  </view>
+
+  <view class="section">
+   <canvas canvas-id="scorechart" disable-scroll="true" class="canvas" ></canvas>
+  </view>
+
+</view>
+</template>
+<style>
+.canvas {
+    width: 95%;
+    height: 500px;
+}
+</style>
+<script>
+import wxCharts from '../../common/lib/echarts.line.min.js'
+
+export default {
+  config: {
+    navigationBarTitleText: '训练统计',
+    usingComponents: {}
+  },
+  data: {
+     grid_id:'grid2',
+     charts:[
+       {title:'数字方格', id:'grid2', checked:true},
+       {title:'大写字母', id:'grid1'},
+       {title:'小写字母', id:'grid0'},
+       {title:'大小写混合', id:'grid3'}
+     ]
+  },
+
+  delete_archive:function(e){
+    let chart = this.data.charts.filter(c => c.id == this.data.grid_id)[0]
+    wx.removeStorage({
+      key:this.data.grid_id,
+      success:function(res){
+        console.log(res.data)
+        this.drawchart()
+        
+      }
+    })
+  },
+
+  drawchart:function(){
+    let chart = this.data.charts.filter(c => c.id == this.data.grid_id)[0]
+    let windowWidth = 320;
+    try {
+         let res = wx.getSystemInfoSync();
+         windowWidth = res.windowWidth;
+    } catch (e) {
+      console.error('getSystemInfoSync failed!');
+    }
+    wx.getStorage({
+          key: this.data.grid_id,
+          success: function(res) {
+              let tdata = []
+              let tcategory = []
+              for(let score of res.data){
+                 tdata.push(score.score_second)
+                 tcategory.push(score.index*1 + 1)
+              }
+              let chartdata =  {
+                  categories: tcategory,
+                  data: tdata
+              }
+                
+              if(tdata){                  
+                  let chartinstance = new wxCharts({
+                      canvasId: 'scorechart',
+                      type: 'line',
+                      categories: chartdata.categories,
+                      animation: true,
+                      // background: '#f5f5f5',
+                      series: [{
+                          name: '训练用时(秒)',
+                          data: chartdata.data,                          
+                      }],
+                      xAxis: {
+                          //title:chart.title,
+                          disableGrid: true
+                      },
+                      yAxis: {
+                          title: '计时 (秒)',
+                          /*
+                          format: function (val) {
+                              return val.toFixed(2);
+                          },
+                          */
+                          min: 0
+                      },
+                      width: windowWidth,
+                      height: 220,
+                      dataLabel: true,
+                      dataPointShape: true,
+                      extra: {
+                          lineStyle: 'curve'
+                      }
+                  })
+              }
+          },
+          fail: function() {
+            console.log('no data')
+          } 
+        })
+  },
+
+  onShow: function (e) {
+      this.drawchart()
+  },
+
+  radioChange: function(e) {
+      this.setData({grid_id:e.detail.value})
+      this.drawchart()
+  }
+}
+</script>
+
+<style>
+</style>

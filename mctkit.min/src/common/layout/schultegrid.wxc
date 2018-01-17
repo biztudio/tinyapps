@@ -47,8 +47,6 @@ let default_list = []
 for(let i = 1; i < 26; i++){
     default_list.push(i);
 }
-
-//console.log('I like schulte grid.')
 //const app = getApp()
 
 export default {
