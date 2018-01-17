@@ -1,0 +1,28 @@
+<template>
+test
+</template>
+<script>
+
+export default {
+ 
+ methods:{
+    onClick:function(event){
+      //console.log('ComponentID: ' + event.detail.componentId + ', you selected ' + event.detail.key)
+    }
+  },
+
+ config: {
+    usingComponents: {
+     
+    }
+  },
+
+  data:{
+  
+  }
+}
+</script>
+
+<style>
+
+</style>

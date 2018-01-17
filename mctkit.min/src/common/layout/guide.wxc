@@ -1,0 +1,52 @@
+<template>
+    <view>
+         <wxc-cc class="applogo">
+            <view class="applogo__wrapper">
+            <image class="applogo_pic" src="../../image/idea_2018.net.png" mode="aspectFit"></image>
+            <view class="applogo_text">MCT专注训练器</view>
+            </view>
+        </wxc-cc>
+
+        <text>
+        训练说明：\n
+        通过计时顺序搜索数字或字母训练专注力，所用时间越短，注意力水平越高.\n
+        以数字序列为例，训练时，要求被测者用手指按 1 ~ 25 的顺序依次指出其位置，同时诵读出声, 每次训练组数控制在6组.\n
+        表格背景色采用的是护眼配色以最大限度保护训练者的眼睛。
+        \n\n
+        参考结论：\n
+        以 7—12 岁年龄组为例，用时26"以内为优秀，学习成绩应是名列前茅，42"属中等水平，50"则专注学习问题较大.
+        </text>
+    </view>
+<template>
+<script>
+export default {
+ 
+ config: {
+    usingComponents: {
+        'wxc-cc': '@minui/wxc-cc'
+    }
+  }
+}
+</script>
+<style>
+  .avatar {
+    display: block;
+    width: 120rpx;
+    height: 120rpx;
+  }
+  
+  .applogo {
+    display: block;
+    width: 100%;
+    height: 245rpx;
+    background: #f2f2f2;
+  }
+  .applogo_pic {
+    width: 200rpx;
+    height: 200rpx;
+    margin: 15rpx;
+  }
+  .applogo_text {
+    text-align: center;
+  }
+</style>
