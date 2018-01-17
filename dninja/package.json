@@ -1,0 +1,18 @@
+{
+  "name": "dninja",
+  "description": "基于&#34;刻意练习&#34;与“一万小时理论”理论实践的助理。",
+  "version": "1.0.0",
+  "author": "Yang SHEN",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-plugin-syntax-export-extensions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "minConfig": {
+    "projectType": "application"
+  }
+}

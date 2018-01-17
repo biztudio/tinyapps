@@ -1,0 +1,9 @@
+{
+	"description": "项目配置文件。",
+	"compileType": "miniprogram",
+	"libVersion": "1.7.1",
+	"appid": "wxc3a0f1b44b6bb27b",
+	"projectname": "刻意忍者",
+	"setting": {},
+	"condition": {}
+}
