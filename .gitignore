@@ -105,3 +105,4 @@ ENV/
 /.vscode
 tinyapp/
 coverage/
+/yummyshopping/*.lock
