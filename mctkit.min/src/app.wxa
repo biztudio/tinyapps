@@ -21,7 +21,7 @@
         backgroundTextStyle: 'dark',
         backgroundColor: '#efefef',
         navigationBarBackgroundColor: '#ffffff',
-        navigationBarTitleText: 'MCT专注训练器 0.0.1 (beta)',
+        navigationBarTitleText: 'MCT专注训练器',
         navigationBarTextStyle: 'black'
       },
       networkTimeout: {

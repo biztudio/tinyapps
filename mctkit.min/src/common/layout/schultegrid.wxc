@@ -2,8 +2,8 @@
 
 <view>
     <wxc-flex class="wrap" wrap="{{wrap}}">
-        <view class="item" wx:for="{{cell_value_list}}" wx:key="idx" wx:for-item="item">
-          {{item}}
+        <view data-text="{{item_value}}" class="item" wx:for="{{cell_value_list}}" wx:key="idx" wx:for-item="item_value" bindtap="tapcell">
+          {{item_value}}
         </view>
     </wxc-flex>
 </view>    
@@ -73,6 +73,9 @@ export default {
       {name: '3', value: '大小写混合'}
     ],
 
+    tapped:[],
+    referlist:[],
+
      steps: [{
         title: '步骤1',
         desc: '点击绿色“开练”按钮进行计时的顺序搜索'
@@ -109,12 +112,25 @@ export default {
         complete:_ => {}
       })
    },
+
+    resetparcticelist:function(){
+       this.setData({tapped:[]})
+        if(this.data.case_mode == 2){
+            let digit_pool_r = []
+            for(let i = 1; i <= 25; i++){ digit_pool_r.push(i); }
+            this.setData({referlist:digit_pool_r})
+         }
+         else{
+            this.setData({referlist:alphabetkit.get_letter_list()})
+         }
+         //console.log(this.data.referlist)
+    },
     
     resetstartbutton:function(){
         clearInterval(this.data.timerid) 
         this.setData({score_second:0})
         this.setData({disabled_btnstart:false})
-        this.setData({btnname_start:'开练'})
+        this.setData({btnname_start:'开练'})       
     },
 
     showtoastinfo:function(message, show_seconds){
@@ -178,6 +194,7 @@ export default {
     },
 
     addnewpractise:function(event){
+         this.resetparcticelist()
          this.drawgrid()
          this.setData({score_second:0})
          this.setData({disabled_btnstart:true})          
@@ -197,6 +214,23 @@ export default {
     showsetting:function(event){
       let dialogComponent = this.selectComponent('.wxc-dialog')
       dialogComponent && dialogComponent.show();
+    },
+
+    tapcell:function(e){
+      // set data-text for currentTarget text
+      //https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/event.html
+      //console.log(e.currentTarget.dataset.text)
+      let current_tap_cell = e.currentTarget.dataset.text
+      if(current_tap_cell && current_tap_cell != undefined){
+          if(this.data.case_mode != 2) current_tap_cell = current_tap_cell.toLowerCase()
+          let refindex = this.data.referlist.indexOf(current_tap_cell)
+          if(refindex == this.data.tapped.length){
+            if(!this.data.tapped.includes(current_tap_cell)){
+              this.setData({tapped:this.data.tapped.slice(0).concat(current_tap_cell)})
+            }
+          }
+      }
+      //console.log(this.data.tapped)
     },
 
     hideDialog:function() {
@@ -277,6 +311,14 @@ export default {
        let message = ''
        
        if(this.data.score_second >= 10){
+            if(this.data.tapped.length != this.data.referlist.length){              
+              message = '请用手指按顺序点选，拜托了！'
+              if(this.data.tapped.length > 0){
+                message += '\n上一个选对的' + (this.data.case_mode==2?'数字':'字母')+'是 ' + this.data.tapped[this.data.tapped.length - 1]
+              }
+              this.showtoastinfo(message, 2000)
+              return
+            }
             //this.getUserInfo(event)
             //message = '恭喜'+ this.data.userInfo.nickName +'完成训练! \n本次训练用时 ' + (this.data.score_second) + ' 秒'
             message = '恭喜完成挑战! \n本次训练用时 ' + (this.data.score_second) + ' 秒'

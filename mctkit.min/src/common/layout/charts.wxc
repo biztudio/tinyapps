@@ -61,7 +61,7 @@ let lineChart = new wxCharts({
 wx.getStorage({
   key: 'grid2',
   success: function(res) {
-      console.log(res.data)
+      //console.log(res.data)
 
   } 
 })
@@ -81,7 +81,7 @@ export default{
 
     methods:{
       drawcharts:function(e){
-        console.log('this is chart')
+        //console.log('this is chart')
       }
     }
 }
