@@ -120,10 +120,12 @@ export default {
             for(let i = 1; i <= 25; i++){ digit_pool_r.push(i); }
             this.setData({referlist:digit_pool_r})
          }
+         else if(this.data.case_mode == 1){
+            this.setData({referlist:alphabetkit.get_letter_list(true)})
+         }
          else{
             this.setData({referlist:alphabetkit.get_letter_list()})
          }
-         //console.log(this.data.referlist)
     },
     
     resetstartbutton:function(){
@@ -222,11 +224,18 @@ export default {
       //console.log(e.currentTarget.dataset.text)
       let current_tap_cell = e.currentTarget.dataset.text
       if(current_tap_cell && current_tap_cell != undefined){
-          if(this.data.case_mode != 2) current_tap_cell = current_tap_cell.toLowerCase()
+          if(this.data.case_mode != 2 && this.data.case_mode != 1) current_tap_cell = current_tap_cell.toLowerCase()
           let refindex = this.data.referlist.indexOf(current_tap_cell)
           if(refindex == this.data.tapped.length){
             if(!this.data.tapped.includes(current_tap_cell)){
               this.setData({tapped:this.data.tapped.slice(0).concat(current_tap_cell)})
+            }
+          }
+          else{
+            if(this.data.disabled_btnstart){
+              let suggest = this.data.referlist[this.data.tapped.length]
+              let message = (this.data.case_mode == 2?'数字 ':'字母 ') + suggest + ' 在等待，请关注~'
+              this.showtoastinfo(message, 666)
             }
           }
       }
