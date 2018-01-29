@@ -1,12 +1,15 @@
 <template>
 
 <view>
-    <wxc-flex class="wrap" wrap="{{wrap}}">
-        <view data-text="{{item.value}}" class="item" wx:for="{{cell_value_list}}" wx:key="idx" wx:for-item="item" >
-          <text wx:if="{{item.display > 0 }}">{{item.display}}</text>
-          <text wx:else>  </text>
+
+    <wxc-flex class="wrap" wrap="{{_wrap}}">
+        
+        <view data-text="{{grid_init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grid_init_indes}}" wx:key="idx"  wx:for-item="grid_init_index" >
+          <text >{{grid_init_index}}</text>
         </view>
+
     </wxc-flex>
+
 </view>
 
 </template>
@@ -14,6 +17,8 @@
 import sudokukit from '../lib/sudokukit'
 
 let sudokuPuzzle = sudokukit.getSudokuPuzzle(3).SudokuPuzzle
+let grid_init_indes = sudokukit.getStartIndesInGrids(sudokuPuzzle)
+
 export default {
 
     config: {
@@ -28,8 +33,9 @@ export default {
     },
 
     data:{
-        wrap: 'wrap',
-        cell_value_list:sudokuPuzzle
+        _wrap: 'wrap',
+        _sudokuPuzzle:sudokuPuzzle,
+        _grid_init_indes:grid_init_indes
     },   
 
     methods:{
@@ -45,23 +51,26 @@ export default {
   }
   .wrap {
     display: block;
-    padding: 10rpx;
-    background: #AAAAAA;
+    padding: 1%;
+    background: #003300;
   }
-  .item {
-    min-width: 11.11%;
-    min-height: 80rpx;
+  
+  .grid {
+    min-width: 32%;
+    min-height: 245rpx;
+    margin: 0.5%;
+    flex-grow: 0;
     font-size: 40rpx;
     text-align: center;
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   }
-  .item:nth-of-type(odd) {
-    line-height: 80rpx;
-    background: #C7EDCC
+  .grid:nth-of-type(odd) {
+    line-height: 245rpx;
+    background: #C7EDCC/*FFFFFF*/
   }
-  .item:nth-of-type(2n) {
-    line-height: 80rpx;
-    background: #FFDDAA/*C7EDCC*/
+  .grid:nth-of-type(2n) {
+    line-height: 245rpx;
+    background: #C7EDCC/*FFDDAA*/
   }
 
 </style>
