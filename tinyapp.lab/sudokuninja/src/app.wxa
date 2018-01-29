@@ -1,11 +1,10 @@
 <template>
   <view>
-    <layout-head></layout-head>
-
+   
     <!-- wxp template -->
     <page></page>
 
-    <layout-foot></layout-foot>
+   
   </view>
 </template>
 
@@ -13,15 +12,14 @@
   export default {
     config: {
       usingComponents: {
-        'layout-head': 'layout/head',
-        'layout-foot': 'layout/foot'
+       
       },
       pages: [],
       window: {
         backgroundTextStyle: 'dark',
         backgroundColor: '#efefef',
         navigationBarBackgroundColor: '#ffffff',
-        navigationBarTitleText: 'Sudoku Ninja',
+        navigationBarTitleText: '数独忍者',
         navigationBarTextStyle: 'black'
       },
       networkTimeout: {

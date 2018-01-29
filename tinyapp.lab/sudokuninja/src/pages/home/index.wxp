@@ -1,26 +1,42 @@
 <template>
   <view>
     <view class="index-hd">
-      <view class="index-desc">数独忍者</view>
+      <view class="index-desc"> </view>
     </view>
 
     <view class="index-bd">
       Hello World
     </view>
 
-    <view class="index-ft">
-      <view class="provider">Created by Biztudio, since 2018</view>
+    <view class="btn-area">
+      <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">跳转到新页面</navigator>
+      <navigator url="../../redirect/redirect/redirect?title=redirect" open-type="redirect" hover-class="other-navigator-hover">在当前页打开</navigator>
+      <navigator url="/page/index/index" open-type="switchTab" hover-class="other-navigator-hover">切换 Tab</navigator>
     </view>
+
   </view>
 
 </template>
 
 <script>
 export default {
+  onLoad:function name(options) {
+    this.setData({
+      title: options.title
+    })
+  }
 }
 </script>
 
 <style>
+.navigator-hover {
+    color:blue;
+}
+/** 自定义其他点击态样式类 **/
+.other-navigator-hover {
+    color:red;
+}
+
 .index-hd {
   padding: 70rpx;
   text-align: center;
