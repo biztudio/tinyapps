@@ -5,7 +5,7 @@
     <wxc-flex class="wrap" wrap="{{_wrap}}">
         
         <view data-text="{{grid_init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grid_init_indes}}" wx:key="idx"  wx:for-item="grid_init_index" >
-          <text >{{grid_init_index}}</text>
+          
         </view>
 
     </wxc-flex>
@@ -57,7 +57,7 @@ export default {
   
   .grid {
     min-width: 32%;
-    min-height: 245rpx;
+    min-height: 246rpx;
     margin: 0.5%;
     flex-grow: 0;
     font-size: 40rpx;
@@ -65,11 +65,11 @@ export default {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   }
   .grid:nth-of-type(odd) {
-    line-height: 245rpx;
+    line-height: 246rpx;
     background: #C7EDCC/*FFFFFF*/
   }
   .grid:nth-of-type(2n) {
-    line-height: 245rpx;
+    line-height: 246rpx;
     background: #C7EDCC/*FFDDAA*/
   }
 
