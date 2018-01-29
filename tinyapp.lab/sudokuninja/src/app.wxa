@@ -24,7 +24,34 @@
       },
       networkTimeout: {
         request: 10000
+      },
+
+       "tabBar": {
+        "color": "#a9b7b7",
+        "selectedColor": "#11cd6e",
+        "borderStyle": "white",
+        "list": [
+          {
+            "selectedIconPath": "image/tab/sudoku_greenbox.png",
+            "iconPath": "image/tab/sudoku_gray.png",
+            "pagePath": "pages/home/index",
+            "text": "数独"
+          },
+          {
+            "selectedIconPath": "image/tab/coms-active.png",
+            "iconPath": "image/tab/coms-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "成绩"
+          },
+          {
+            "selectedIconPath": "image/tab/about-active.png",
+            "iconPath": "image/tab/about-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "关于"
+          }
+        ]
       }
+      
     },
     globalData: { },
     onLaunch () { },
