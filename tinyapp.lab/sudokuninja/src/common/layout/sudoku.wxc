@@ -1,0 +1,67 @@
+<template>
+
+<view>
+    <wxc-flex class="wrap" wrap="{{wrap}}">
+        <view data-text="{{item.value}}" class="item" wx:for="{{cell_value_list}}" wx:key="idx" wx:for-item="item" >
+          <text wx:if="{{item.display > 0 }}">{{item.display}}</text>
+          <text wx:else>  </text>
+        </view>
+    </wxc-flex>
+</view>
+
+</template>
+<script>
+import sudokukit from '../lib/sudokukit'
+
+let sudokuPuzzle = sudokukit.getSudokuPuzzle(3).SudokuPuzzle
+export default {
+
+    config: {
+        usingComponents: {
+                'wxc-label': '@minui/wxc-label',
+                'wxc-flex':  '@minui/wxc-flex'/*,
+                'wxc-toast': '@minui/wxc-toast',
+                'wxc-steps': '@minui/wxc-steps',
+                'wxc-dialog': '@minui/wxc-dialog'
+                */  
+            }
+    },
+
+    data:{
+        wrap: 'wrap',
+        cell_value_list:sudokuPuzzle
+    },   
+
+    methods:{
+
+  
+    }
+}
+</script>
+
+<style>
+  .label {
+    margin-right: 20rpx;
+  }
+  .wrap {
+    display: block;
+    padding: 10rpx;
+    background: #AAAAAA;
+  }
+  .item {
+    min-width: 11.11%;
+    min-height: 80rpx;
+    font-size: 40rpx;
+    text-align: center;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  }
+  .item:nth-of-type(odd) {
+    line-height: 80rpx;
+    background: #C7EDCC
+  }
+  .item:nth-of-type(2n) {
+    line-height: 80rpx;
+    background: #FFDDAA/*C7EDCC*/
+  }
+
+</style>

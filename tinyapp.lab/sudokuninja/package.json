@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "author": "Yang SHEN",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@minui/wxc-flex": "^1.0.3",
+    "@minui/wxc-label": "^1.0.3"
+  },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",

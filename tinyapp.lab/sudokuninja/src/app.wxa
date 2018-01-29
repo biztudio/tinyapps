@@ -40,13 +40,13 @@
           {
             "selectedIconPath": "image/tab/coms-active.png",
             "iconPath": "image/tab/coms-normal.png",
-            "pagePath": "pages/home/index",
+            "pagePath": "pages/history/index",
             "text": "成绩"
           },
           {
             "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
-            "pagePath": "pages/home/index",
+            "pagePath": "pages/about/index",
             "text": "关于"
           }
         ]

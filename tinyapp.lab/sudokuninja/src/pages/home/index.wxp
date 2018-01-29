@@ -4,6 +4,7 @@
       <view class="index-desc"> </view>
     </view>
 
+    <sudoku></sudoku>
 
   </view>
 
@@ -11,6 +12,18 @@
 
 <script>
 export default {
+  config: {
+        usingComponents: {
+          sudoku:'../../common/layout/sudoku.wxc'
+                /*
+                'wxc-flex':  '@minui/wxc-flex',
+                'wxc-toast': '@minui/wxc-toast',
+                'wxc-steps': '@minui/wxc-steps',
+                'wxc-dialog': '@minui/wxc-dialog'
+                */  
+            }
+  },
+
   onLoad:function name(options) {
     this.setData({
       title: options.title
@@ -20,43 +33,5 @@ export default {
 </script>
 
 <style>
-.navigator-hover {
-    color:blue;
-}
-/** 自定义其他点击态样式类 **/
-.other-navigator-hover {
-    color:red;
-}
 
-.index-hd {
-  padding: 70rpx;
-  text-align: center;
-}
-.index-bd {
-  padding: 20rpx 30rpx;
-  background-color:cadetblue;
-  color: #fff;
-  text-align: center;
-}
-.index-ft {
-  padding-bottom: 20rpx;
-  text-align: center;
-}
-.index-logo {
-  width: 100rpx;
-  height: 100rpx;
-}
-.index-desc {
-  margin-top: 20rpx;
-  color: #888888;
-  font-size: 28rpx;
-}
-
-.provider {
-  position: fixed;
-  width: 100%;
-  bottom: 120rpx;
-  color: #a9a9a9;
-  text-align: center;
-}
 </style>
