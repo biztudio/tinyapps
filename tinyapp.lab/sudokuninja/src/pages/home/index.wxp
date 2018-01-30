@@ -1,27 +1,38 @@
 <template>
   <view>
    
-    <wxc-flex class="wrap" wrap="{{_wrap}}">
-        
-        <view data-text="{{grid.init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grids}}" wx:key="idx"  wx:for-item="grid" >
-            
-              <view id="panel" class="grid_panel flex-column">
-                <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
-                  <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
-                   <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
-                   <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}"></text>
-                   <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == true}}">{{grid_cell.value}}</text>
-                  </block>
+    <view>
+      <wxc-flex class="wrap" wrap="{{_wrap}}">
+          
+          <view data-text="{{grid.init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grids}}" wx:key="idx"  wx:for-item="grid" >
+              
+                <view id="panel" class="grid_panel flex-column">
+                  <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
+                    <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
+                    <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
+                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}"></text>
+                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == true}}">{{grid_cell.value}}</text>
+                    </block>
+                  </view>  
                 </view>  
-              </view>  
 
-        </view>
+          </view>
 
-    </wxc-flex>
+      </wxc-flex>
+    </view>
 
-    <button type="primary" bindtap="refreshSudoku" size="default">再刷一份</button>
-    看答案:<switch checked="{{_showAnswer}}" bindchange="switchAnswerChange"/>
-
+    <view>
+      <button type="primary" bindtap="refreshSudoku" size="default">再刷一份</button>
+    </view>
+    <view>  
+      <text class="section__title">选难度: </text>
+      <wxc-label class="label">{{_levelDesc}}</wxc-label>      
+      <slider value="{{_level}}" bindchange="selectLevel" min="2" max="6" />
+    </view>
+    <view>
+      <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" type="checkbox" bindchange="switchAnswerChange"/>
+    </view>
+    
   </view>
 
 </template>
@@ -44,6 +55,7 @@ export default {
   data:{
         _wrap: 'wrap',
         _level:3,
+        _levelDesc:'随便玩玩',
         _showAnswer:false,
         _sudokuPuzzle: [],
         _grid_init_indes :[],
@@ -72,6 +84,18 @@ export default {
     this.setData({_grid_init_indes:grid_init_indes})
     this.setData({_sudokuPuzzle:sudokuPuzzle})
     this.setData({_grids:grids})
+  },
+
+  selectLevel:function(event){
+    this.setData({_level:event.detail.value})
+    switch(event.detail.value){
+      case 2: this.setData({_levelDesc:'闭眼秒杀'});break;
+      case 3: this.setData({_levelDesc:'随便玩玩'});break;
+      case 4: this.setData({_levelDesc:'有点意思'});break;
+      case 5: this.setData({_levelDesc:'稍微想想'});break;
+      case 6: this.setData({_levelDesc:'琢磨片刻'});break;
+    }
+    this.drawSudoku(event.detail.value)
   },
 
   switchAnswerChange:function(event){
