@@ -4,8 +4,17 @@
 
     <wxc-flex class="wrap" wrap="{{_wrap}}">
         
-        <view data-text="{{grid_init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grid_init_indes}}" wx:key="idx"  wx:for-item="grid_init_index" >
-          
+        <view data-text="{{grid.init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grids}}" wx:key="idx"  wx:for-item="grid" >
+            
+              <view id="panel" class="grid_panel flex-column">
+                <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
+                  <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
+                   <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
+                   <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0}}"> </text>
+                  </block>
+                </view>  
+              </view>  
+
         </view>
 
     </wxc-flex>
@@ -18,6 +27,25 @@ import sudokukit from '../lib/sudokukit'
 
 let sudokuPuzzle = sudokukit.getSudokuPuzzle(3).SudokuPuzzle
 let grid_init_indes = sudokukit.getStartIndesInGrids(sudokuPuzzle)
+let grids = []
+for(let grid_init_index of grid_init_indes){
+  let grid_indes = sudokukit.getIndexListInGrid(grid_init_index, grid_init_indes)
+  let cell_value_list = []
+  let grid_rows = [[],[],[]]
+  let current_line = sudokukit.getLineIndex(grid_init_index)
+  for(let grid_index_i in grid_indes){
+    let grid_index = grid_indes[grid_index_i]
+    let sudoku_cell = sudokuPuzzle[grid_index]
+    cell_value_list.push(sudoku_cell)    
+    
+    let line_index = sudokukit.getLineIndex(grid_index)  
+    let line_index_in_grid = line_index % 3
+    grid_rows[line_index_in_grid].push(sudoku_cell)// = value_per_row
+    
+  }
+  
+  grids.push({init_index:grid_init_index, cell_value_list:cell_value_list, grid_rows:grid_rows})
+}
 
 export default {
 
@@ -35,7 +63,8 @@ export default {
     data:{
         _wrap: 'wrap',
         _sudokuPuzzle:sudokuPuzzle,
-        _grid_init_indes:grid_init_indes
+        _grid_init_indes:grid_init_indes,
+        _grids:grids
     },   
 
     methods:{
@@ -57,7 +86,7 @@ export default {
   
   .grid {
     min-width: 32%;
-    min-height: 246rpx;
+    min-height: 248rpx;
     margin: 0.5%;
     flex-grow: 0;
     font-size: 40rpx;
@@ -65,12 +94,41 @@ export default {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   }
   .grid:nth-of-type(odd) {
-    line-height: 246rpx;
+    line-height: 248rpx;
     background: #C7EDCC/*FFFFFF*/
   }
   .grid:nth-of-type(2n) {
-    line-height: 246rpx;
+    line-height: 248rpx;
     background: #C7EDCC/*FFDDAA*/
   }
+
+/*flex table */
+    .grid_panel{
+      height:248rpx;
+      /*background:#fff;*/
+    }
+
+    .grid_panel text{
+      line-height: 40rpx;
+      border-right: 1rpx solid #ddd;
+      border-bottom: 1rpx solid #ddd;
+    }
+
+    .flex-row{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .flex-column{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .flex-cell{
+      flex: 1;
+    }
 
 </style>
