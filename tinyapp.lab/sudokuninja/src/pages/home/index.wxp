@@ -29,10 +29,11 @@
       <wxc-label class="label">{{_levelDesc}}</wxc-label>      
       <slider value="{{_level}}" bindchange="selectLevel" min="2" max="6" />
     </view>
+    <!--
     <view>
       <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" type="checkbox" bindchange="switchAnswerChange"/>
     </view>
-    
+    -->
   </view>
 
 </template>

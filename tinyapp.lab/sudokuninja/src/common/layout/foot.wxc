@@ -1,6 +1,6 @@
 <template>
   <view class="foot">
-    <text class="foot-text">底部模板</text>
+    <text class="foot-text">Made by Biztudio, since 2018. </text>
   </view>
 </template>
 

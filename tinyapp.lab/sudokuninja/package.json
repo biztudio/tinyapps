@@ -5,6 +5,7 @@
   "author": "Yang SHEN",
   "license": "MIT",
   "dependencies": {
+    "@minui/wxc-cc": "^1.0.1",
     "@minui/wxc-flex": "^1.0.3",
     "@minui/wxc-label": "^1.0.3"
   },
