@@ -9,9 +9,9 @@
                 <view id="panel" class="grid_panel flex-column">
                   <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
                     <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
-                    <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
-                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}" data-text="{{grid_cell.value}}" bindtap="showDialogFillCell"></text>
-                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == true}}">{{grid_cell.value}}</text>
+                      <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
+                      <text class="flex-cell flex-row hide-color" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}" data-text="{{grid_cell.value}}" bindtap="showDialogFillCell">{{grid_cell.display}}</text>
+                      <text class="flex-cell flex-row answer-color" wx:elif="{{grid_cell.display <= 0 && _showAnswer == true}}">{{grid_cell.value}}</text>
                     </block>
                   </view>  
                 </view>  
@@ -116,7 +116,7 @@ export default {
   showDialogFillCell:function(event){
     let expected = event.currentTarget.dataset.text
     console.log('Expected: ' + expected)
-    this.showtoastinfo('Expected: ' + expected, 1500)
+    //this.showtoastinfo('Expected: ' + expected, 1500)
   },
 
   switchAnswerChange:function(event){
@@ -173,6 +173,13 @@ export default {
       /*line-height: 40rpx;*/
       border-right: 1rpx solid #003300;
       border-bottom: 1rpx solid #003300;
+    }
+
+    .hide-color{
+      color: #C7EDCC
+    }
+    .answer-color{
+      color: darkorchid
     }
 
     .flex-row{
