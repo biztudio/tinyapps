@@ -7,7 +7,9 @@
   "dependencies": {
     "@minui/wxc-cc": "^1.0.1",
     "@minui/wxc-flex": "^1.0.3",
-    "@minui/wxc-label": "^1.0.3"
+    "@minui/wxc-label": "^1.0.3",
+    "@minui/wxc-popup": "^1.0.6",
+    "@minui/wxc-toast": "^1.0.6"
   },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",

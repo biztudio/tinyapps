@@ -10,7 +10,7 @@
                   <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
                     <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
                     <text class="flex-cell flex-row" wx:if="{{grid_cell.display > 0}}">{{grid_cell.display}}</text>
-                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}"></text>
+                    <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == false}}" data-text="{{grid_cell.value}}" bindtap="showDialogFillCell"></text>
                     <text class="flex-cell flex-row" wx:elif="{{grid_cell.display <= 0 && _showAnswer == true}}">{{grid_cell.value}}</text>
                     </block>
                   </view>  
@@ -34,7 +34,11 @@
       <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" type="checkbox" bindchange="switchAnswerChange"/>
     </view>
     -->
+
+    
   </view>
+  
+  <wxc-toast is-show="{{$toast.show}}" text="{{_message}}" ></wxc-toast>
 
 </template>
 
@@ -44,16 +48,19 @@ import sudokukit from '../../common/lib/sudokukit.js'
 export default {
   config: {
         usingComponents: {
+             'wxc-toast': '@minui/wxc-toast',
+             'wxc-popup': '@minui/wxc-popup',            
              'wxc-label': '@minui/wxc-label',
              'wxc-flex':  '@minui/wxc-flex'
                 /*
-                'wxc-toast': '@minui/wxc-toast',
                 'wxc-dialog': '@minui/wxc-dialog'
                 */  
             }
   },
 
   data:{
+        $toast: { show: false },
+        _message:'',
         _wrap: 'wrap',
         _level:3,
         _levelDesc:'随便玩玩',
@@ -62,6 +69,13 @@ export default {
         _grid_init_indes :[],
         _grids: []
   }, 
+
+  showtoastinfo:function(message, show_m_seconds){
+        if(!show_m_seconds) show_m_seconds = 999
+        this.setData({_message:message}) 
+        this.setData({ $toast: { show: true } })
+        setTimeout(() => { this.setData({ $toast: { show: false }}) }, show_m_seconds)
+  },
 
   drawSudoku:function(level=3){
     this.setData({_showAnswer:false})
@@ -97,6 +111,12 @@ export default {
       case 6: this.setData({_levelDesc:'琢磨片刻'});break;
     }
     this.drawSudoku(event.detail.value)
+  },
+
+  showDialogFillCell:function(event){
+    let expected = event.currentTarget.dataset.text
+    console.log('Expected: ' + expected)
+    this.showtoastinfo('Expected: ' + expected, 1500)
   },
 
   switchAnswerChange:function(event){
