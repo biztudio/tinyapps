@@ -25,16 +25,14 @@
       <button type="primary" bindtap="refreshSudoku" size="default">再刷一份</button>
     </view>
     <view>  
-      <text class="section__title">选难度: </text>
-      <wxc-label class="label">{{_levelDesc}}</wxc-label>      
-      <slider value="{{_level}}" bindchange="selectLevel" min="2" max="6" />
+      <picker bindchange="bindLevelPickerChange" value="{{_level_index}}" range="{{level_options}}" range-key="name">
+          <view class="picker">数独难度：{{_levelDesc}}</view>
+      </picker>
     </view>
-    <!--
+   
     <view>
-      <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" type="checkbox" bindchange="switchAnswerChange"/>
+      <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" bindchange="switchAnswerChange"/>
     </view>
-    -->
-
     
   </view>
   
@@ -67,8 +65,29 @@ export default {
         _showAnswer:false,
         _sudokuPuzzle: [],
         _grid_init_indes :[],
-        _grids: []
+        _grids: [],
+
+        _answer_index: 0,
+        _answer_array: [1,2,3,4,5,6,7,8,9],
+
+        _level_index:1,
+        level_options:[
+          {id:2,name:'闭眼秒杀'},
+          {id:3,name:'随便玩玩'},
+          {id:4,name:'有点意思'},
+          {id:5,name:'稍微想想'},
+          {id:6,name:'琢磨片刻'}
+        ]
+        
   }, 
+
+  bindLevelPickerChange: function(e) {
+    let selected = this.data.level_options[e.detail.value]
+    this.setData({_level: selected.id})
+    this.setData({_level_index: e.detail.value})
+    this.setData({_levelDesc:selected.name})
+    this.drawSudoku(selected.id)
+  },
 
   showtoastinfo:function(message, show_m_seconds){
         if(!show_m_seconds) show_m_seconds = 999
@@ -99,18 +118,6 @@ export default {
     this.setData({_grid_init_indes:grid_init_indes})
     this.setData({_sudokuPuzzle:sudokuPuzzle})
     this.setData({_grids:grids})
-  },
-
-  selectLevel:function(event){
-    this.setData({_level:event.detail.value})
-    switch(event.detail.value){
-      case 2: this.setData({_levelDesc:'闭眼秒杀'});break;
-      case 3: this.setData({_levelDesc:'随便玩玩'});break;
-      case 4: this.setData({_levelDesc:'有点意思'});break;
-      case 5: this.setData({_levelDesc:'稍微想想'});break;
-      case 6: this.setData({_levelDesc:'琢磨片刻'});break;
-    }
-    this.drawSudoku(event.detail.value)
   },
 
   showDialogFillCell:function(event){
