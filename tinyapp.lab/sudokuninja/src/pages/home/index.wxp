@@ -38,7 +38,7 @@
     </view>
     <view>  
       <picker bindchange="bindLevelPickerChange" value="{{_level_index}}" range="{{level_options}}" range-key="name">
-          <view class="picker">数独难度：{{_levelDesc}}</view>
+          <view class="picker">选择难度（点击）：{{_levelDesc}}</view>
       </picker>
     </view>
    
@@ -51,9 +51,9 @@
    <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
     <view class="popup_content">
 
-      <radio-group class="radio-group answers" bindchange="radioChange">
-        <label class="radio" wx:for="{{_answer_array}}" wx:key="idx_aw" wx:for-item="answer_item">
-          <radio value="{{answer_item}}" checked="false"/>{{answer_item}}
+      <radio-group class="radio-group answers" wrap="wrap"><!-- bindchange="radioChange"-->
+        <label class="radio" wx:for="{{_answer_array}}" style="font-size:25rpx;" wx:key="idx_aw" wx:for-item="answer_item">
+          <radio data-answer="{{answer_item}}" bindtap = "selectRadioAnswer" value="{{answer_item}}" checked="false"/>{{answer_item}}
         </label>
       </radio-group>
 
@@ -192,6 +192,15 @@ export default {
           this.showtoastinfo('目测这个值不一定合适呐！~', 1000)  
         }
     }
+  },
+
+  selectRadioAnswer:function(event){
+    let answer = event.currentTarget.dataset.answer
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && 
+       answer && answer > 0){
+        this.selectAnswer(answer)
+    }
+    this.hidePopup()
   },
 
   radioChange:function(event){
