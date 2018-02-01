@@ -296,10 +296,12 @@ export default{
     getSudokuPuzzle:function(level = 3){        
         let sudoku = this.getSudokuSourceData()
         let sudokuPuzzle = []
-        for(let sudokuitem of sudoku){
+        for(let sudokuitemindex in sudoku){
+            let sudokuitem = sudoku[sudokuitemindex]
             sudokuPuzzle.push({
                 value:sudokuitem,
-                display:sudokuitem
+                display:sudokuitem,
+                index:sudokuitemindex
             })
         }
         let grid_init_indes = this.getStartIndesInGrids(sudoku)
