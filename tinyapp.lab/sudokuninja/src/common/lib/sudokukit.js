@@ -301,6 +301,7 @@ export default{
             sudokuPuzzle.push({
                 value:sudokuitem,
                 display:sudokuitem,
+                answer:sudokuitem,
                 index:sudokuitemindex
             })
         }
@@ -311,6 +312,7 @@ export default{
             for(let lucky_pos of hide_postions){
                 let hide_index = grid_indes[lucky_pos]
                 sudokuPuzzle[hide_index].display = 0
+                sudokuPuzzle[hide_index].answer = 0
             }
         }
 

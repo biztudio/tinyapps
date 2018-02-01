@@ -14,8 +14,12 @@
 
                       <text class="flex-cell flex-row answer-color" wx:elif="{{grid_cell.data.display <= 0 && _showAnswer == true}}" data-index="{{grid_cell.data.index}}" >{{grid_cell.data.value}}</text>                      
                       
-                      <!-- hide-color -->
-                      <text class="flex-cell flex-row hidden-color" wx:elif="{{grid_cell.data.display <= 0 && _showAnswer == false}}" 
+                      <text class="flex-cell flex-row cust-answer-color" wx:elif="{{grid_cell.data.display <= 0 && grid_cell.data.answer > 0 && _showAnswer == false}}" 
+                            data-text="{{grid_cell.data.value}}" data-index="{{grid_cell.data.index}}" 
+                            data-grid="{{grid_cell.index.gridindex}}" data-gridrow="{{grid_cell.index.rowindex}}" data-gridcell="{{grid_cell.index.cellindex}}"
+                            bindtap="showDialogFillCell">{{grid_cell.data.answer}}</text>
+
+                      <text class="flex-cell flex-row hidden-color" wx:elif="{{grid_cell.data.display <= 0 && grid_cell.data.answer <= 0 && _showAnswer == false}}" 
                             data-text="{{grid_cell.data.value}}" data-index="{{grid_cell.data.index}}" 
                             data-grid="{{grid_cell.index.gridindex}}" data-gridrow="{{grid_cell.index.rowindex}}" data-gridcell="{{grid_cell.index.cellindex}}"
                             bindtap="showDialogFillCell">{{grid_cell.data.display}}</text>
@@ -107,7 +111,6 @@ export default {
     let grid_init_indes = sudokukit.getStartIndesInGrids(sudokuPuzzle)
     let grids = []
     let gridindex = 0
-    let rowindex = 0
     let cellindex = 0
     for(let grid_init_index of grid_init_indes){
       let grid_indes = sudokukit.getIndexListInGrid(grid_init_index, grid_init_indes)
@@ -128,8 +131,6 @@ export default {
     this.setData({_grid_init_indes:grid_init_indes})
     this.setData({_sudokuPuzzle:sudokuPuzzle})
     this.setData({_grids:grids})
-
-    console.log(this.data._grids)
   },
 
   showDialogFillCell:function(event){
@@ -139,7 +140,7 @@ export default {
     let gridcell = event.currentTarget.dataset.gridcell
     let grids = this.data._grids
 
-    grids[gridindex].grid_rows[gridrow][gridcell].data.display = expected
+    grids[gridindex].grid_rows[gridrow][gridcell].data.answer = expected
     this.setData({_grids:grids})
   },
 
@@ -204,6 +205,9 @@ export default {
     }
     .answer-color{
       color: darkorchid
+    }
+    .cust-answer-color{
+      color:blue
     }
 
     .flex-row{
