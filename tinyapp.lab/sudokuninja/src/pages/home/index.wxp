@@ -177,22 +177,28 @@ export default {
       popupComponent && popupComponent.toggle();
   },
 
-  radioChange:function(event){
+   selectAnswer:function(answer){
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && answer > 0){
+        let expected  = this.data._popup_para.expected
+        let gridindex = this.data._popup_para.gridindex
+        let gridrow = this.data._popup_para.gridrow
+        let gridcell = this.data._popup_para.gridcell
+        let grids = this.data._grids
+        
+        grids[gridindex].grid_rows[gridrow][gridcell].data.answer = answer
+        this.setData({_grids:grids})
+        this.setData({_current_selected:answer})
+        if(expected != answer){
+          this.showtoastinfo('目测这个值不一定合适呐！~', 1000)  
+        }
+    }
+  },
 
+  radioChange:function(event){
+    this.setData({_selection_changed:true})
     if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && 
        event.detail.value && event.detail.value > 0){
-      let expected  = this.data._popup_para.expected
-      let gridindex = this.data._popup_para.gridindex
-      let gridrow = this.data._popup_para.gridrow
-      let gridcell = this.data._popup_para.gridcell
-      let grids = this.data._grids
-      
-      grids[gridindex].grid_rows[gridrow][gridcell].data.answer = event.detail.value
-      this.setData({_grids:grids})
-
-      if(expected != event.detail.value){
-        this.showtoastinfo('目测这个值不一定合适呐！~', 1000)  
-      }
+        this.selectAnswer(event.detail.value)
     }
     this.hidePopup()
   },
@@ -203,12 +209,6 @@ export default {
     let gridrow = event.currentTarget.dataset.gridrow
     let gridcell = event.currentTarget.dataset.gridcell
     this.showPopup(expected, gridindex, gridrow, gridcell)
-
-    /*
-    let grids = this.data._grids
-    grids[gridindex].grid_rows[gridrow][gridcell].data.answer = expected
-    this.setData({_grids:grids})
-    */
   },
 
   switchAnswerChange:function(event){
