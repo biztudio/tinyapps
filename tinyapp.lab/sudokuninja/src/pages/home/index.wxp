@@ -47,6 +47,18 @@
     </view>
     
   </view>
+
+   <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
+    <view class="popup_content">
+
+      <radio-group class="radio-group answers" bindchange="radioChange">
+        <label class="radio" wx:for="{{_answer_array}}" wx:key="idx_aw" wx:for-item="answer_item">
+          <radio value="{{answer_item}}" checked="false"/>{{answer_item}}
+        </label>
+      </radio-group>
+
+    </view>
+   </wxc-popup>
   
   <wxc-toast is-show="{{$toast.show}}" text="{{_message}}" ></wxc-toast>
 
@@ -87,7 +99,15 @@ export default {
           {id:4,name:'有点意思'},
           {id:5,name:'稍微想想'},
           {id:6,name:'琢磨片刻'}
-        ]        
+        ],
+        
+        _popup_para:{
+          expected:0,
+          gridindex:0,
+          gridrow:0,
+          gridcell:0
+        },
+        _popup_result:0        
   }, 
 
   bindLevelPickerChange: function(e) {
@@ -133,15 +153,62 @@ export default {
     this.setData({_grids:grids})
   },
 
+  showPopup(expected, gridindex, gridrow, gridcell) {
+      let popupComponent = this.selectComponent('.J_Popup');
+      this.setData({_popup_para:{
+          expected:expected,
+          gridindex:gridindex,
+          gridrow:gridrow,
+          gridcell:gridcell
+      }})
+      //popupComponent && popupComponent.show();
+      popupComponent && popupComponent.toggle(true);
+  },
+
+  hidePopup() {
+      this.setData({ _popup_para:{
+          expected:0,
+          gridindex:0,
+          gridrow:0,
+          gridcell:0
+        }})
+      let popupComponent = this.selectComponent('.J_Popup');
+      //popupComponent && popupComponent.hide();
+      popupComponent && popupComponent.toggle();
+  },
+
+  radioChange:function(event){
+
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && 
+       event.detail.value && event.detail.value > 0){
+      let expected  = this.data._popup_para.expected
+      let gridindex = this.data._popup_para.gridindex
+      let gridrow = this.data._popup_para.gridrow
+      let gridcell = this.data._popup_para.gridcell
+      let grids = this.data._grids
+      
+      grids[gridindex].grid_rows[gridrow][gridcell].data.answer = event.detail.value
+      this.setData({_grids:grids})
+
+      if(expected != event.detail.value){
+        this.showtoastinfo('目测这个值不一定合适呐！~', 1000)  
+      }
+    }
+    this.hidePopup()
+  },
+
   showDialogFillCell:function(event){
     let expected  = event.currentTarget.dataset.text
     let gridindex = event.currentTarget.dataset.grid
     let gridrow = event.currentTarget.dataset.gridrow
     let gridcell = event.currentTarget.dataset.gridcell
-    let grids = this.data._grids
+    this.showPopup(expected, gridindex, gridrow, gridcell)
 
+    /*
+    let grids = this.data._grids
     grids[gridindex].grid_rows[gridrow][gridcell].data.answer = expected
     this.setData({_grids:grids})
+    */
   },
 
   switchAnswerChange:function(event){
@@ -161,6 +228,15 @@ export default {
 </script>
 
 <style>
+
+    .popup_content {
+      width: 100%;
+      height: 220rpx;
+      line-height: 200rpx;
+      background: #ffffff;
+      text-align: center;
+    }
+
     .label {
       margin-right: 20rpx;
     }
