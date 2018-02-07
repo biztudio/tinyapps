@@ -307,13 +307,33 @@ export default{
             })
         }
         let grid_init_indes = this.getStartIndesInGrids(sudoku)
-        for(let grid_init_index of grid_init_indes){
-            let grid_indes = this.getIndexListInGrid(grid_init_index)
-            let hide_postions = this.getHidePositionInGrid(level)
-            for(let lucky_pos of hide_postions){
-                let hide_index = grid_indes[lucky_pos]
-                sudokuPuzzle[hide_index].display = 0
-                sudokuPuzzle[hide_index].answer = 0
+        if(level < 6){
+            for(let grid_init_index of grid_init_indes){
+                let grid_indes = this.getIndexListInGrid(grid_init_index)
+                let hide_postions = this.getHidePositionInGrid(level)
+                for(let lucky_pos of hide_postions){
+                    let hide_index = grid_indes[lucky_pos]
+                    sudokuPuzzle[hide_index].display = 0
+                    sudokuPuzzle[hide_index].answer = 0
+                }
+            }
+        }
+        else{
+            for(let g_index in grid_init_indes){
+                let grid_init_index = grid_init_indes[g_index]                
+                let grid_indes = this.getIndexListInGrid(grid_init_index)
+                let hide_postions = []
+                if(g_index == 0 || g_index == 4 || g_index == 8){
+                    hide_postions = [1,2,3,5,6,7]
+                }
+                else{
+                    hide_postions = this.getHidePositionInGrid(level)                    
+                }
+                for(let lucky_pos of hide_postions){
+                    let hide_index = grid_indes[lucky_pos]
+                    sudokuPuzzle[hide_index].display = 0
+                    sudokuPuzzle[hide_index].answer = 0
+                }
             }
         }
 
