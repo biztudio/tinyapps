@@ -307,7 +307,7 @@ export default{
             })
         }
         let grid_init_indes = this.getStartIndesInGrids(sudoku)
-        if(level < 6){
+        if(level < 5){
             for(let grid_init_index of grid_init_indes){
                 let grid_indes = this.getIndexListInGrid(grid_init_index)
                 let hide_postions = this.getHidePositionInGrid(level)
