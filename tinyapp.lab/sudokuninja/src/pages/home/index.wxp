@@ -187,11 +187,50 @@ export default {
         
         grids[gridindex].grid_rows[gridrow][gridcell].data.answer = answer
         this.setData({_grids:grids})
-        this.setData({_current_selected:answer})
-        if(expected != answer){
-          this.showtoastinfo('目测这个值不一定合适呐！~', 1000)  
-        }
+        this.setData({_current_selected:answer})       
+        this.verifyResult()
     }
+  },
+
+  checkCompletion:function(){
+    let grids_answers = []
+    let grids = this.data._grids
+    for(let grid of grids){
+        for(let row of grid.grid_rows){
+          for(let cell of row){
+            if(cell.data.answer > 0){
+              grids_answers.push({index:cell.data.index, answer:cell.data.answer})
+            }
+            else{
+              return {completion: false, grids_answers:grids_answers}
+            }
+          }
+      }
+    }
+    return {completion: true, grids_answers:grids_answers}
+  },
+
+  verifyResult:function(){
+    let sudoku_completion = this.checkCompletion()
+    if(!sudoku_completion.completion) return false;
+    let sudoku = sudoku_completion.grids_answers.sort( function(gc1, gc2){
+      if(gc1.index * 1 < gc2.index * 1) { return -1 } else { return 1 } 
+    }).map(gc => gc.answer)
+    let checkresult = sudokukit.checkSudoku(sudoku)
+    let message = "恭喜完成，好赞！"
+    if(!checkresult.validation){      
+      switch(checkresult.check){        
+        case 1: 
+          let grid_init_indes = sudokukit.getStartIndesInGrids(sudoku)
+          message = '请再检查一下第 ' + (1*grid_init_indes.indexOf(checkresult.refindex) + 1) + ' 个 3x3 大方格中的数字，拜托了~'; break;
+        case 2: 
+          message = '请再检查一下第 ' + (1*sudokukit.getLineIndex(checkresult.refindex) + 1) + ' 行中的数字，拜托了~'; break;
+        case 3: 
+          message = '请再检查一下第 ' + (1*checkresult.refindex + 1) + ' 列中的数字，拜托了~'; break;
+      }
+    }
+    this.showtoastinfo(message, checkresult.validation?1234:2000)  
+    return checkresult.validation
   },
 
   selectRadioAnswer:function(event){

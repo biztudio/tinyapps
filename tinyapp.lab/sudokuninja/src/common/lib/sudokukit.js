@@ -2,19 +2,9 @@
 import mathkit from './mathkit'
 
 export default{   
-    checkSudoku:function(sudoku){
-        let grid_init_indes = this.getStartIndesInGrids()
+    checkSudoku:function(sudoku){       
         let first_indes_per_line = this.getIndexListInColum(0)
-        let checksum = 0
-        for(let grid_init_index of grid_init_indes){
-            let indes_in_grid = this.getIndexListInGrid(grid_init_index)
-            checksum = 0
-            for(let index_in_grid of indes_in_grid){
-                checksum += (sudoku[index_in_grid] * 1)
-            }
-            if(checksum != 45) return {validation:false, check:1, refindex:grid_init_index, checksum:checksum}
-        }
-        console.log('Sudoku is valid in grids.')
+        let checksum = 0      
         
         for(let first_index_in_line of first_indes_per_line){
             checksum = 0
@@ -23,7 +13,7 @@ export default{
             }
             if(checksum != 45) return {validation:false, check:2, refindex:first_index_in_line, checksum:checksum}
         }
-        console.log('Sudoku is valid in lines.')
+        //console.log('Sudoku is valid in lines.')
         
         for(let index = 0; index < 9; index++){
             let col_indes = this.getIndexListInColum(index)
@@ -33,7 +23,18 @@ export default{
             }
             if(checksum != 45) return {validation:false, check:3, refindex:index, checksum:checksum}
         }
-        console.log('Sudoku is valid in columns.')
+        //console.log('Sudoku is valid in columns.')
+
+        let grid_init_indes = this.getStartIndesInGrids(sudoku)
+        for(let grid_init_index of grid_init_indes){
+            let indes_in_grid = this.getIndexListInGrid(grid_init_index)
+            checksum = 0
+            for(let index_in_grid of indes_in_grid){
+                checksum += (sudoku[index_in_grid] * 1)
+            }
+            if(checksum != 45) return {validation:false, check:1, refindex:grid_init_index, checksum:checksum}
+        }
+        //console.log('Sudoku is valid in grids.')
 
         return {validation:true, check:0, refindex:0, checksum:checksum}
     },
