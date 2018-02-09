@@ -1,5 +1,5 @@
 <template>
-
+ <layout-head></layout-head>
 <view>
     <wxc-flex class="wrap" wrap="{{wrap}}">
         <view data-text="{{item_value}}" class="item" wx:for="{{cell_value_list}}" wx:key="idx" wx:for-item="item_value" bindtap="tapcell">
@@ -47,6 +47,7 @@ export default {
 
  config: {
         usingComponents: {
+            'layout-head':'layout/head',
             'wxc-flex':  '@minui/wxc-flex',
             'wxc-toast': '@minui/wxc-toast',
             'wxc-steps': '@minui/wxc-steps',
