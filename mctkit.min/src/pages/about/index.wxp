@@ -1,0 +1,60 @@
+<template>
+     <layout-head></layout-head>
+    <view>
+        
+        <text>
+            1. 舒尔特(schulte)方格训练说明：\n
+            通过计时顺序搜索数字或字母训练专注力，所用时间越短，注意力水平越高.\n
+            以数字序列训练为例，要求被测者用手指按 1 ~ 25 的顺序依次点出其位置，每次训练组数控制在6组.\n            
+            \n
+            参考结论：\n
+            以 7—12 岁年龄组为例，用时26"以内为优秀，学习成绩应是名列前茅，42"属中等水平，50"则专注学习问题较大.\n\n
+       
+            2. 数独训练说明: \n
+            规则：\n
+            根据9×9盘面上的已知数字，推理出所有剩余空格的数字，并满足每一行、每一列、每一个粗线宫（3*3）内的数字均含1-9，不重复。\n
+            \n 
+            为什么：\n
+            俗话说“学奥数，不如玩数独”，由于数独没有复杂的计算，所有人都可以低门槛渐进地锻炼的逻辑推理和专注力；\n
+            对成年人而言，有句话说“每天三分钟，保健脑眼动一动”，适度活动大脑和眼睛有利于身心保持健康。
+            \n\n                 
+            以上所有训练表格背景色采用的是护眼配色以最大限度保护训练者的眼睛。  \n\n   
+        </text>
+
+       
+    </view>
+    <layout-foot></layout-foot>
+<template>
+<script>
+export default {
+ 
+ config: {
+    usingComponents: {
+         'layout-head':'layout/head',
+         'layout-foot': 'layout/foot'
+    }
+  }
+}
+</script>
+<style>
+  .avatar {
+    display: block;
+    width: 120rpx;
+    height: 120rpx;
+  }
+  
+  .applogo {
+    display: block;
+    width: 100%;
+    height: 245rpx;
+    background: #f2f2f2;
+  }
+  .applogo_pic {
+    width: 200rpx;
+    height: 200rpx;
+    margin: 15rpx;
+  }
+  .applogo_text {
+    text-align: center;
+  }
+</style>

@@ -1,4 +1,5 @@
 <template>
+ <layout-head></layout-head>
 <view>
  <view class="section">
         <text>序列模式：</text>
@@ -19,6 +20,7 @@
 </view>
 -->
 </view>
+ <layout-foot></layout-foot>
 </template>
 <style>
 .canvas {
@@ -31,8 +33,11 @@ import wxCharts from '../../common/lib/wxcharts-min.js'
 
 export default {
   config: {
-    navigationBarTitleText: '训练统计',
-    usingComponents: {}
+    navigationBarTitleText: 'Schulte方格训练统计',
+    usingComponents: {
+         'layout-head':'layout/head',
+         'layout-foot': 'layout/foot'
+    }
   },
   data: {
      grid_id:'grid2',

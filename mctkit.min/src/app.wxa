@@ -35,22 +35,20 @@
             "selectedIconPath": "image/tab/coms-active.png",
             "iconPath": "image/tab/coms-normal.png",
             "pagePath": "pages/home/index",
-            "text": "方格"
+            "text": "Schulte方格"
           },
           {
             "selectedIconPath": "image/tab/sudoku_greenbox.png",
             "iconPath": "image/tab/sudoku_gray.png",
             "pagePath": "pages/sudoku/index",
-            "text": "数独"
-          }/*,
-         
+            "text": "Ninja数独"
+          },         
           {
             "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
-            "pagePath": "pages/home/index",
-            "text": "说明"
+            "pagePath": "pages/about/index",
+            "text": "规则指南"
           }
-          */
         ]
       }
     },    
