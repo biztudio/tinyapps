@@ -95,7 +95,7 @@ export default {
      timerid:0
  },   
 
-   onLoad:function(options) {
+   onShow:function(options) {
      let default_list = []
      for(let i = 1; i < 26; i++){
           default_list.push(i);
