@@ -1,0 +1,18 @@
+{
+  "name": "guitarx",
+  "description": "全平台首款吉他和尤克里里爱好者的小程序帮手",
+  "version": "1.0.0",
+  "author": "shenyang",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-plugin-syntax-export-extensions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "minConfig": {
+    "projectType": "application"
+  }
+}
