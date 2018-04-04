@@ -15,6 +15,26 @@
       usingComponents: {
 
       },
+     "tabBar": {
+        "color": "#a9b7b7",
+        "selectedColor": "#11cd6e",
+        "borderStyle": "white",
+        "list": [
+          {
+            "selectedIconPath": "image/tab/coms-active.png",
+            "iconPath": "image/tab/coms-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "Schulte方格"
+          },
+          {
+             "selectedIconPath": "image/tab/about-active.png",
+            "iconPath": "image/tab/about-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "规则指南"
+          }
+        ]
+      },
+      
       pages: [],
       window: {
         backgroundTextStyle: 'dark',
@@ -30,21 +50,7 @@
     globalData: { },
     onLaunch () { },
     onShow () { },
-    onHide () { },
-
-     "tabBar": {
-        "color": "#a9b7b7",
-        "selectedColor": "#11cd6e",
-        "borderStyle": "white",
-        "list": [
-          {
-            "selectedIconPath": "image/tab/coms-active.png",
-            "iconPath": "image/tab/coms-normal.png",
-            "pagePath": "pages/home/index",
-            "text": "Schulte方格"
-          }
-        ]
-      }
+    onHide () { }
 
   }
 </script>
