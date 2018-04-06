@@ -24,13 +24,25 @@
             "selectedIconPath": "image/tab/coms-active.png",
             "iconPath": "image/tab/coms-normal.png",
             "pagePath": "pages/home/index",
-            "text": "Schulte方格"
+            "text": "那些和弦"
           },
           {
-             "selectedIconPath": "image/tab/about-active.png",
+            "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
             "pagePath": "pages/home/index",
-            "text": "规则指南"
+            "text": "一点套路"
+          },
+          {
+            "selectedIconPath": "image/tab/about-active.png",
+            "iconPath": "image/tab/about-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "趁热练手"
+          },
+          {
+            "selectedIconPath": "image/tab/about-active.png",
+            "iconPath": "image/tab/about-normal.png",
+            "pagePath": "pages/home/index",
+            "text": "关于"
           }
         ]
       },
