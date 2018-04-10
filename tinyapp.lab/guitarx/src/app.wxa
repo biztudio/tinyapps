@@ -19,6 +19,7 @@
         "color": "#a9b7b7",
         "selectedColor": "#11cd6e",
         "borderStyle": "white",
+        "position":"bottom",
         "list": [
           {
             "selectedIconPath": "image/tab/coms-active.png",
