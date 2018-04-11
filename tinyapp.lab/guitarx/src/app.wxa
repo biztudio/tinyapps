@@ -30,19 +30,19 @@
           {
             "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
-            "pagePath": "pages/home/index",
+            "pagePath": "pages/trick/index_trick",
             "text": "一点套路"
           },
           {
             "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
-            "pagePath": "pages/home/index",
+            "pagePath": "pages/example/index_example",
             "text": "趁热练手"
           },
           {
             "selectedIconPath": "image/tab/about-active.png",
             "iconPath": "image/tab/about-normal.png",
-            "pagePath": "pages/home/index",
+            "pagePath": "pages/about/index_about",
             "text": "关于"
           }
         ]
