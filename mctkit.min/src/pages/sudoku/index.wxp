@@ -1,0 +1,355 @@
+<template>
+  <view>
+   
+    <view>
+      <wxc-flex class="wrap" wrap="{{_wrap}}">
+          
+          <view data-text="{{grid.init_index}}" data-index="{{idx}}" class="grid" wx:for="{{_grids}}" wx:key="idx"  wx:for-item="grid" >
+              
+                <view id="panel" class="grid_panel flex-column">
+                  <view class="flex-cell flex-row" wx:for="{{grid.grid_rows}}" wx:key="idx_row"  wx:for-item="grid_row">
+                    <block  wx:for="{{grid_row}}" wx:key="idx_cell"  wx:for-item="grid_cell" >
+
+                      <text class="flex-cell flex-row" wx:if="{{grid_cell.data.display > 0}}" data-index="{{grid_cell.data.index}}" >{{grid_cell.data.display}}</text>
+
+                      <text class="flex-cell flex-row answer-color" wx:elif="{{grid_cell.data.display <= 0 && _showAnswer == true}}" data-index="{{grid_cell.data.index}}" >{{grid_cell.data.value}}</text>                      
+                      
+                      <text class="flex-cell flex-row cust-answer-color" wx:elif="{{grid_cell.data.display <= 0 && grid_cell.data.answer > 0 && _showAnswer == false}}" 
+                            data-text="{{grid_cell.data.value}}" data-index="{{grid_cell.data.index}}" 
+                            data-grid="{{grid_cell.index.gridindex}}" data-gridrow="{{grid_cell.index.rowindex}}" data-gridcell="{{grid_cell.index.cellindex}}"
+                            bindtap="showDialogFillCell">{{grid_cell.data.answer}}</text>
+
+                      <text class="flex-cell flex-row hidden-color" wx:elif="{{grid_cell.data.display <= 0 && grid_cell.data.answer <= 0 && _showAnswer == false}}" 
+                            data-text="{{grid_cell.data.value}}" data-index="{{grid_cell.data.index}}" 
+                            data-grid="{{grid_cell.index.gridindex}}" data-gridrow="{{grid_cell.index.rowindex}}" data-gridcell="{{grid_cell.index.cellindex}}"
+                            bindtap="showDialogFillCell">{{grid_cell.data.display}}</text>
+
+                    </block>
+                  </view>  
+                </view>  
+
+          </view>
+
+      </wxc-flex>
+    </view>
+
+    <view>
+      <button type="primary" bindtap="refreshSudoku" size="default">再刷一份</button>
+    </view>
+    <view>  
+      <picker bindchange="bindLevelPickerChange" value="{{_level_index}}" range="{{level_options}}" range-key="name">
+          <view class="picker">选择难度（点击）：{{_levelDesc}}</view>
+      </picker>
+    </view>
+   
+    <view>
+      <text class="section__title">看答案:</text><switch checked="{{_showAnswer}}" bindchange="switchAnswerChange"/>
+    </view>
+    
+  </view>
+
+   <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
+    <view class="popup_content">
+
+      <radio-group class="radio-group answers" wrap="wrap"><!-- bindchange="radioChange"-->
+        <label class="radio" wx:for="{{_answer_array}}" style="font-size:25rpx;" wx:key="idx_aw" wx:for-item="answer_item">
+          <radio data-answer="{{answer_item}}" bindtap = "selectRadioAnswer" value="{{answer_item}}" checked="false"/>{{answer_item}}
+        </label>
+      </radio-group>
+
+    </view>
+   </wxc-popup>
+  
+  <wxc-toast is-show="{{$toast.show}}" text="{{_message}}" ></wxc-toast>
+
+</template>
+
+<script>
+import sudokukit from '../../common/lib/sudokukit.js'
+
+export default {
+  config: {
+        usingComponents: {
+             'wxc-toast': '@minui/wxc-toast',
+             'wxc-popup': '@minui/wxc-popup',            
+             'wxc-label': '@minui/wxc-label',
+             'wxc-flex':  '@minui/wxc-flex'
+            }
+  },
+
+  data:{
+        $toast: { show: false },
+        _message:'',
+        _wrap: 'wrap',
+        _level:3,
+        _levelDesc:'随便玩玩',
+        _showAnswer:false,
+        _sudokuPuzzle: [],
+        _grid_init_indes :[],
+        _grids: [],
+        _empty_sudoku_item_indes:[],
+
+        _answer_index: 0,
+        _answer_array: [1,2,3,4,5,6,7,8,9],
+
+        _level_index:1,
+        level_options:[
+          {id:2,name:'闭眼秒杀'},
+          {id:3,name:'随便玩玩'},
+          {id:4,name:'有点意思'},
+          {id:5,name:'稍微想想'},
+          {id:6,name:'琢磨片刻'}
+        ],
+        
+        _popup_para:{
+          expected:0,
+          gridindex:0,
+          gridrow:0,
+          gridcell:0
+        },
+        _popup_result:0        
+  }, 
+
+  bindLevelPickerChange: function(e) {
+    let selected = this.data.level_options[e.detail.value]
+    this.setData({_level: selected.id})
+    this.setData({_level_index: e.detail.value})
+    this.setData({_levelDesc:selected.name})
+    this.drawSudoku(selected.id)
+  },
+
+  showtoastinfo:function(message, show_m_seconds){
+        if(!show_m_seconds) show_m_seconds = 999
+        this.setData({_message:message}) 
+        this.setData({ $toast: { show: true } })
+        setTimeout(() => { this.setData({ $toast: { show: false }}) }, show_m_seconds)
+  },
+
+  drawSudoku:function(level=3){
+    this.setData({_showAnswer:false})
+    let sudokuPuzzle = sudokukit.getSudokuPuzzle(level).SudokuPuzzle
+    let grid_init_indes = sudokukit.getStartIndesInGrids(sudokuPuzzle)
+    let grids = []
+    let gridindex = 0
+    let cellindex = 0
+    for(let grid_init_index of grid_init_indes){
+      let grid_indes = sudokukit.getIndexListInGrid(grid_init_index, grid_init_indes)
+      let grid_rows = [[],[],[]]
+      let current_line = sudokukit.getLineIndex(grid_init_index)
+      for(let grid_index_i in grid_indes){
+        let grid_index = grid_indes[grid_index_i]
+        let sudoku_cell = sudokuPuzzle[grid_index]
+        let line_index = sudokukit.getLineIndex(grid_index)  
+        let line_index_in_grid = line_index % 3
+        cellindex = grid_rows[line_index_in_grid].length
+        grid_rows[line_index_in_grid].push({data:sudoku_cell, index:{gridindex:gridindex, rowindex:line_index_in_grid, cellindex:cellindex, sudokuindex:grid_index}})        
+      }
+      gridindex++
+      grids.push({init_index:grid_init_index, grid_rows:grid_rows})
+    }
+    this.setData({_empty_sudoku_item_indes:sudokuPuzzle.filter(s => s.display==0).map(se => se.index)})
+    this.setData({_grid_init_indes:grid_init_indes})
+    this.setData({_sudokuPuzzle:sudokuPuzzle})
+    this.setData({_grids:grids})
+  },
+
+  showPopup(expected, gridindex, gridrow, gridcell) {
+      let popupComponent = this.selectComponent('.J_Popup');
+      this.setData({_popup_para:{
+          expected:expected,
+          gridindex:gridindex,
+          gridrow:gridrow,
+          gridcell:gridcell
+      }})
+      //popupComponent && popupComponent.show();
+      popupComponent && popupComponent.toggle(true);
+  },
+
+  hidePopup() {
+      this.setData({ _popup_para:{
+          expected:0,
+          gridindex:0,
+          gridrow:0,
+          gridcell:0
+        }})
+      let popupComponent = this.selectComponent('.J_Popup');
+      //popupComponent && popupComponent.hide();
+      popupComponent && popupComponent.toggle();
+  },
+
+   selectAnswer:function(answer){
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && answer > 0){
+        let expected  = this.data._popup_para.expected
+        let gridindex = this.data._popup_para.gridindex
+        let gridrow = this.data._popup_para.gridrow
+        let gridcell = this.data._popup_para.gridcell
+        let grids = this.data._grids
+        
+        grids[gridindex].grid_rows[gridrow][gridcell].data.answer = answer
+        this.setData({_grids:grids})
+        this.setData({_current_selected:answer})       
+        this.verifyResult()
+    }
+  },
+
+  checkCompletion:function(){
+    let grids_answers = []
+    let grids = this.data._grids
+    for(let grid of grids){
+        for(let row of grid.grid_rows){
+          for(let cell of row){
+            if(cell.data.answer > 0){
+              grids_answers.push({index:cell.data.index, answer:cell.data.answer})
+            }
+            else{
+              return {completion: false, grids_answers:grids_answers}
+            }
+          }
+      }
+    }
+    return {completion: true, grids_answers:grids_answers}
+  },
+
+  verifyResult:function(){
+    let sudoku_completion = this.checkCompletion()
+    if(!sudoku_completion.completion) return false;
+    let sudoku = sudoku_completion.grids_answers.sort( function(gc1, gc2){
+      if(gc1.index * 1 < gc2.index * 1) { return -1 } else { return 1 } 
+    }).map(gc => gc.answer)
+    let checkresult = sudokukit.checkSudoku(sudoku)
+    let message = "恭喜完成，好赞！"
+    if(!checkresult.validation){      
+      switch(checkresult.check){        
+        case 1: 
+          let grid_init_indes = sudokukit.getStartIndesInGrids(sudoku)
+          message = '请再检查一下第 ' + (1*grid_init_indes.indexOf(checkresult.refindex) + 1) + ' 个 3x3 大方格中的数字，拜托了~'; break;
+        case 2: 
+          message = '请再检查一下第 ' + (1*sudokukit.getLineIndex(checkresult.refindex) + 1) + ' 行中的数字，拜托了~'; break;
+        case 3: 
+          message = '请再检查一下第 ' + (1*checkresult.refindex + 1) + ' 列中的数字，拜托了~'; break;
+      }
+    }
+    this.showtoastinfo(message, checkresult.validation?1234:2000)  
+    return checkresult.validation
+  },
+
+  selectRadioAnswer:function(event){
+    let answer = event.currentTarget.dataset.answer
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && 
+       answer && answer > 0){
+        this.selectAnswer(answer)
+    }
+    this.hidePopup()
+  },
+
+  radioChange:function(event){
+    this.setData({_selection_changed:true})
+    if(this.data._popup_para.expected && this.data._popup_para.expected > 0 && 
+       event.detail.value && event.detail.value > 0){
+        this.selectAnswer(event.detail.value)
+    }
+    this.hidePopup()
+  },
+
+  showDialogFillCell:function(event){
+    let expected  = event.currentTarget.dataset.text
+    let gridindex = event.currentTarget.dataset.grid
+    let gridrow = event.currentTarget.dataset.gridrow
+    let gridcell = event.currentTarget.dataset.gridcell
+    this.showPopup(expected, gridindex, gridrow, gridcell)
+  },
+
+  switchAnswerChange:function(event){
+    this.setData({_showAnswer:event.detail.value})
+  },
+
+  onLoad:function(options) {
+    this.drawSudoku(this.data._level)
+  },
+
+  refreshSudoku:function(event){
+    this.drawSudoku(this.data._level)
+  }
+
+}
+
+</script>
+
+<style>
+
+    .popup_content {
+      width: 100%;
+      height: 220rpx;
+      line-height: 200rpx;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .label {
+      margin-right: 20rpx;
+    }
+    .wrap {
+      display: block;
+      padding: 1%;
+      background: #003300;
+    }
+    
+    .grid {
+      min-width: 32%;
+      min-height: 248rpx;
+      margin: 0.5%;
+      flex-grow: 0;
+      font-size: 40rpx;
+      text-align: center;
+      font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    }
+    .grid:nth-of-type(odd) {
+      line-height: 248rpx;
+      background: #C7EDCC/*FFFFFF*/
+    }
+    .grid:nth-of-type(2n) {
+      line-height: 248rpx;
+      background: #C7EDCC/*FFDDAA*/
+    }
+
+/*flex table */
+    .grid_panel{
+      /*height:248rpx;*/
+      min-height: 248rpx;
+    }
+
+    .grid_panel text{
+      /*line-height: 40rpx;*/
+      border-right: 1rpx solid #003300;
+      border-bottom: 1rpx solid #003300;
+    }
+
+    .hidden-color{
+      color: #C7EDCC
+    }
+    .answer-color{
+      color: darkorchid
+    }
+    .cust-answer-color{
+      color:blue
+    }
+
+    .flex-row{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 90rpx;
+    }
+    .flex-column{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .flex-cell{
+      flex: 1;
+    }
+
+</style>

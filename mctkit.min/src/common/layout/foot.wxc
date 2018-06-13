@@ -1,0 +1,36 @@
+<template>
+  <view class="foot">
+    <image class="foot-icon" src="../../image/idea_2018.net.png"></image>
+    <text class="foot-text">{{foottext}}</text>
+  </view>
+</template>
+
+<script>
+export default {
+  data:{
+    foottext:'Made by Biztudio, since 2018'
+  }
+}
+</script>
+
+<style>
+.foot {
+  height: 80rpx;
+  background-color: #b8e1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+.foot-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+.foot-text {
+  color: #666;
+  font-size: 26rpx;
+  padding-left: 15rpx;
+}
+</style>
