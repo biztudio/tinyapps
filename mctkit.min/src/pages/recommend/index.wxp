@@ -1,0 +1,40 @@
+<template>
+     <layout-head></layout-head>
+    <view>
+        
+    </view>
+    <layout-foot></layout-foot>
+<template>
+<script>
+export default {
+ 
+ config: {
+    usingComponents: {
+         'layout-head':'layout/head',
+         'layout-foot': 'layout/foot'
+    }
+  }
+}
+</script>
+<style>
+  .avatar {
+    display: block;
+    width: 120rpx;
+    height: 120rpx;
+  }
+  
+  .applogo {
+    display: block;
+    width: 100%;
+    height: 245rpx;
+    background: #f2f2f2;
+  }
+  .applogo_pic {
+    width: 200rpx;
+    height: 200rpx;
+    margin: 15rpx;
+  }
+  .applogo_text {
+    text-align: center;
+  }
+</style>

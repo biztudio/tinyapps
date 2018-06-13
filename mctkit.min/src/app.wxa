@@ -42,6 +42,12 @@
             "iconPath": "image/tab/sudoku_gray.png",
             "pagePath": "pages/sudoku/index",
             "text": "Ninja数独"
+          }, 
+           {
+            "selectedIconPath": "image/tab/sudoku_greenbox.png",
+            "iconPath": "image/tab/sudoku_gray.png",
+            "pagePath": "pages/tomato/index",
+            "text": "番茄计时"
           },         
           {
             "selectedIconPath": "image/tab/about-active.png",
